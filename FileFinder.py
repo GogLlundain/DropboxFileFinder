@@ -1,4 +1,4 @@
-__author__ = 'Gareth Jones'
+__author__ = 'GogLlundain'
 
 import os
 from os.path import join, getsize
