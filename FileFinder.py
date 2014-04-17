@@ -2,6 +2,7 @@ __author__ = 'GogLlundain'
 
 import os
 from os.path import join, getsize
+from shutil import move
 
 # 1..   Enumerate all the files in the dropbox folder. Name, date, and size
 # 2..   Find each entry in the target folder.
@@ -42,11 +43,28 @@ class FileInformation(object):
         self.size = size
 
 
-sourceFolder = 'C:\\Users\\Gareth\\Dropbox\\Camera Uploads'
+sourceFolder = 'D:\\DropboxSource'
 targetFolder = 'D:\\Llyniau\\'
+deletedFolder = 'D:\\DropboxDeleted'
 
 sourceFileDictionary = enumerateFilesInDirectory(sourceFolder)
 print len(sourceFileDictionary), 'files found in source'
 
 targetFileDictionary = enumerateFilesInDirectory(targetFolder)
 print len(targetFileDictionary), 'files found in target'
+
+print 'Finding source files in the target'
+filesCompared = 0
+filesFound = 0
+# Looping over the target because it's the bigger of the two collections
+for key, value in targetFileDictionary.iteritems():
+    filesCompared += 1
+    for sourceKey, sourceValue in sourceFileDictionary.iteritems():
+        if value.name == sourceValue.name and value.size == sourceValue.size:
+            filesFound += 1
+            sourceFileDictionary.pop(sourceKey)
+            move(sourceKey, join(deletedFolder, sourceValue.name))
+            break
+
+print filesCompared, 'were looked for,', filesFound, 'were found'
+print len(sourceFileDictionary), 'items remain in the source dictionary'
