@@ -12,6 +12,7 @@ def enumerateFilesInDirectory(sourceFolder):
     fileInformation = enumerateFilesInFolder(sourceFolder)
     return fileInformation
 
+
 def enumerateFilesInFolder(rootFolder):
     filesInThisFolder = dict()
     for root, dirs, files in os.walk(rootFolder):
@@ -25,6 +26,7 @@ def enumerateFilesInFolder(rootFolder):
                 for subfile in subFiles.values():
                     filesInThisFolder[subfile.fullFilePath()] = subfile
     return filesInThisFolder
+
 
 class FileInformation(object):
     name = ""
